@@ -36,6 +36,32 @@ RSpec.describe Api::V1::MerchantSearchsController, :type => :controller do
       expect(json['name']).to eq(merchant.name)
     end
 
+    it "returns merchant by created_at" do
+      pending
+      merchant = create(:merchant)
+
+      # get :show, created_at: "2012-03-27T14:54:05.000Z"
+      get :show, created_at: merchant.created_at
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      # binding.pry
+      json = JSON.parse(response.body)
+      expect(json['name']).to eq(merchant.name)
+    end
+
+    it "returns merchant by updated_at" do
+      pending
+      merchant = create(:merchant)
+
+      # get :show, created_at: "2012-03-27T14:54:05.000Z"
+      get :show, updated_at: merchant.updated_at
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      # binding.pry
+      json = JSON.parse(response.body)
+      expect(json['name']).to eq(merchant.name)
+    end
+
     it "returns a random merchant" do
       merchant = create(:merchant)
 

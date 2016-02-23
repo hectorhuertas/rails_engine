@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'factory_girl_rails'
+gem "active_model_serializers", github: "rails-api/active_model_serializers"
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
