@@ -37,7 +37,6 @@ RSpec.describe Api::V1::MerchantSearchsController, :type => :controller do
     end
 
     it "returns merchant by created_at" do
-      pending
       merchant = create(:merchant)
 
       # get :show, created_at: "2012-03-27T14:54:05.000Z"
@@ -50,7 +49,6 @@ RSpec.describe Api::V1::MerchantSearchsController, :type => :controller do
     end
 
     it "returns merchant by updated_at" do
-      pending
       merchant = create(:merchant)
 
       # get :show, created_at: "2012-03-27T14:54:05.000Z"
