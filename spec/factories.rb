@@ -1,4 +1,12 @@
 FactoryGirl.define do
+  factory :transaction do
+    invoice nil
+    sequence(:credit_card_number) { |i| "Card number no #{i}" }
+    sequence(:result) { |i| "Result no #{i}" }
+    created_at Date.today
+    updated_at Date.today
+  end
+
   factory :invoice_item do
     item nil
     invoice nil
