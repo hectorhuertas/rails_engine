@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get "/merchants/random", to: "merchant_searchs#show"
-      get "/merchants/find", to: "merchant_searchs#show"
+      get "/merchants/random",   to: "merchant_searchs#show"
+      get "/merchants/find",     to: "merchant_searchs#show"
       get "/merchants/find_all", to: "merchant_searchs#index"
+
       resources :merchants, only: [:index, :show] do
-        resources :items,    only: [:index]
-        resources :invoices, only: [:index]
+        resources :items,    module: :merchants, only: [:index]
+        resources :invoices, module: :merchants, only: [:index]
       end
 
-      get "/customers/random", to: "customer_searchs#show"
-      get "/customers/find", to: "customer_searchs#show"
+      get "/customers/random",   to: "customer_searchs#show"
+      get "/customers/find",     to: "customer_searchs#show"
       get "/customers/find_all", to: "customer_searchs#index"
       resources :customers, only: [:index, :show]
 
@@ -28,6 +29,11 @@ Rails.application.routes.draw do
           get "/find_all", to: "invoices/search#index"
           get "/random",   to: "invoices/random#show"
         end
+        resources :transactions,  module: :invoices, only: [:index]
+        resources :invoice_items, module: :invoices, only: [:index]
+        resources :items,         module: :invoices, only: [:index]
+        resource :customer,       module: :invoices, only: [:show]
+        resource :merchant,       module: :invoices, only: [:show]
       end
 
       resources :invoice_items, only: [:index, :show] do
