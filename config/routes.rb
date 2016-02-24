@@ -6,8 +6,12 @@ Rails.application.routes.draw do
       get "/merchants/find_all", to: "merchant_searchs#index"
 
       resources :merchants, only: [:index, :show] do
+        collection do
+          get "/most_revenue", to: "merchants/most_revenue#index"
+        end
         resources :items,    module: :merchants, only: [:index]
         resources :invoices, module: :merchants, only: [:index]
+        # resources :most_revenue, module: :merchants, only: [:index]
       end
 
       get "/customers/random",   to: "customer_searchs#show"
