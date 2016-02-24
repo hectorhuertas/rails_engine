@@ -2,7 +2,11 @@ class Api::V1::ItemsController < Api::ApiController
   respond_to :json
 
   def index
-    respond_with Item.all
+    if params[:merchant_id]
+      respond_with Item.where(merchant_id: params[:merchant_id])
+    else
+      respond_with Item.all
+    end
   end
 
   def show
