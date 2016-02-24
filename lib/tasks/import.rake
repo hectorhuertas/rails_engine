@@ -24,8 +24,14 @@ task import: [:environment] do
   #   Invoice.create row.to_h
   # end
 
-  file = "vendor/assets/csv/invoice_items.csv"
-  CSV.foreach(file, headers: true) do |row|
-    InvoiceItem.create row.to_h
-  end
+  # file = "vendor/assets/csv/invoice_items.csv"
+  # CSV.foreach(file, headers: true) do |row|
+  #   InvoiceItem.create row.to_h
+  # end
+  #
+  # file = "vendor/assets/csv/transactions.csv"
+  # CSV.foreach(file, headers: true) do |row|
+  #   row.delete("credit_card_expiration_date")
+  #   Transaction.create row.to_h
+  # end
 end
