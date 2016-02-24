@@ -1,4 +1,13 @@
 FactoryGirl.define do
+  factory :invoice_item do
+    item nil
+    invoice nil
+    sequence(:quantity) { |i| i }
+    sequence(:unit_price) { |i| 100 + i }
+    created_at Date.today
+    updated_at Date.today
+  end
+
   factory :invoice do
     customer nil
     merchant nil

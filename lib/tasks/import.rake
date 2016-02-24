@@ -23,4 +23,9 @@ task import: [:environment] do
   # CSV.foreach(file, headers: true) do |row|
   #   Invoice.create row.to_h
   # end
+
+  file = "vendor/assets/csv/invoice_items.csv"
+  CSV.foreach(file, headers: true) do |row|
+    InvoiceItem.create row.to_h
+  end
 end
