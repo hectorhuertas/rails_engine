@@ -1,5 +1,7 @@
 class Item < ActiveRecord::Base
   belongs_to :merchant
+  has_one :invoice_item
+  has_many :invoices, through: :invoice_item
 
   before_save :dollarize
 
