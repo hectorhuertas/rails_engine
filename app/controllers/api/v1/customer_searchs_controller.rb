@@ -16,7 +16,7 @@ class Api::V1::CustomerSearchsController < Api::ApiController
     def search_by(attribute)
       # binding.pry
       case attribute
-      when 'controller' then Customer.offset(rand(Customer.count))
+      when 'format'     then Customer.offset(rand(Customer.count))
       when 'id'         then Customer.where(id: params[attribute])
       when 'created_at' then Customer.where(created_at: DateTime.parse(params[attribute]))
       when 'updated_at' then Customer.where(created_at: DateTime.parse(params[attribute]))

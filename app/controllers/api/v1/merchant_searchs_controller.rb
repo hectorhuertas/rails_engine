@@ -14,9 +14,9 @@ class Api::V1::MerchantSearchsController < Api::ApiController
     end
 
     def search_by(attribute)
-      # binding.pry
       case attribute
       when 'controller' then Merchant.offset(rand(Merchant.count))
+      when 'format'     then Merchant.offset(rand(Merchant.count))
       when 'id'         then Merchant.where(id: params[attribute])
       when 'created_at' then Merchant.where(created_at: DateTime.parse(params[attribute]))
       when 'updated_at' then Merchant.where(created_at: DateTime.parse(params[attribute]))
