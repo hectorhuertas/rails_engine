@@ -1,4 +1,12 @@
 FactoryGirl.define do
+  factory :item do
+    sequence(:name) { |i| "Item no #{i}" }
+    sequence(:description) { |i| "Item description no #{i}" }
+    sequence(:unit_price) { |i| 100 + i }
+    merchant nil
+    created_at Date.today
+    updated_at Date.today
+  end
 
   factory :customer do
     sequence(:first_name) { |i| "First name no #{i}" }
