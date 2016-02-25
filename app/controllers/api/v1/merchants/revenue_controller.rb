@@ -33,16 +33,24 @@ class Api::V1::Merchants::RevenueController < Api::ApiController
   end
 
   def show
-    # binding.pry
-    b = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-            .joins(invoices: [:transactions, :invoice_items])
-            .group('merchants.id')
-            .where('transactions.result = ?', "success")
-            .where('merchants.id = ?', "#{params[:merchant_id]}")
-            .order('revenue desc')
-            .take(params[:quantity])
-            # binding.pry
-    # binding.pry
+    if params[:date]
+      b = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+              .joins(invoices: [:transactions, :invoice_items])
+              .group('merchants.id')
+              .where('transactions.result = ?', "success")
+              .where('invoices.updated_at = ?', "#{params[:date]}")
+              .where('merchants.id = ?', "#{params[:merchant_id]}")
+              .order('revenue desc')
+              .take(params[:quantity])
+    else
+      b = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+              .joins(invoices: [:transactions, :invoice_items])
+              .group('merchants.id')
+              .where('transactions.result = ?', "success")
+              .where('merchants.id = ?', "#{params[:merchant_id]}")
+              .order('revenue desc')
+              .take(params[:quantity])
+    end
     c = {revenue: b.revenue}
     respond_with c
   end

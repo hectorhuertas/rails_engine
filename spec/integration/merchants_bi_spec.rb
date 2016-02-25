@@ -22,22 +22,22 @@ RSpec.describe "Merchants Relationship API" do
   #   json = JSON.parse(response.body)
   #   expect(json).to eq("sdfsaf")
   # end
-  it "returns top merchant by total revenue" do
-    create_list(:item, 1)
-    items = create_list(:item, 2)
-    invoice_items = create_list(:invoice_item, 2)
-    merchant = create(:merchant, items: items)
-    merchant = create(:merchant, items: items)
-
-    quantity = 1
-
-    get "/api/v1/merchants/:id/customers_with_pending_invoices"
-    expect(response).to be_success
-    expect(response).to have_http_status(200)
-
-    json = JSON.parse(response.body)
-    expect(json.length).to eq(2)
-  end
+  # it "returns top merchant by total revenue" do
+  #   create_list(:item, 1)
+  #   items = create_list(:item, 2)
+  #   invoice_items = create_list(:invoice_item, 2)
+  #   merchant = create(:merchant, items: items)
+  #   merchant = create(:merchant, items: items)
+  #
+  #   quantity = 1
+  #
+  #   get "/api/v1/merchants/:id/customers_with_pending_invoices"
+  #   expect(response).to be_success
+  #   expect(response).to have_http_status(200)
+  #
+  #   json = JSON.parse(response.body)
+  #   expect(json.length).to eq(2)
+  # end
   # it "returns top merchant by total revenue" do
   #   create_list(:item, 1)
   #   items = create_list(:item, 2)
