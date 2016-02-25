@@ -2,6 +2,8 @@ class Api::V1::Customers::TransactionsController < Api::ApiController
   respond_to :json
 
   def index
-    respond_with Customer.find(params[:customer_id]).invoices.map{|inv| inv.transactions}.flatten
+    respond_with Customer.find(params[:customer_id])
+                         .invoices.map{|inv| inv.transactions}
+                         .flatten
   end
 end
