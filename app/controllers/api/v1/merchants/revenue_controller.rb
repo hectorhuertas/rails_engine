@@ -1,6 +1,39 @@
 class Api::V1::Merchants::RevenueController < Api::ApiController
   respond_to :json
 
+  def show
+    if params[:date]
+      merchants = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+      .joins(invoices: [:transactions, :invoice_items])
+      .group('merchants.id')
+      .where('transactions.result = ?', "success")
+      .where('invoices.updated_at = ?', "#{params[:date]}")
+      .where('merchants.id = ?', "#{params[:merchant_id]}")
+      .order('revenue desc')
+      .take(params[:quantity])
+    else
+      merchants = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+      .joins(invoices: [:transactions, :invoice_items])
+      .group('merchants.id')
+      .where('transactions.result = ?', "success")
+      .where('merchants.id = ?', "#{params[:merchant_id]}")
+      .order('revenue desc')
+      .take(params[:quantity])
+    end
+    revenue = {revenue: merchants.revenue}
+    respond_with revenue
+  end
+
+  def index
+    merchants = Merchant.select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
+    .joins(invoices: [:transactions, :invoice_items])
+    .group('merchants.id')
+    .where('transactions.result = ?', "success")
+    .order('total_revenue desc')
+    .take(params[:quantity])
+    respond_with merchants
+  end
+
   # def show
   #   b = Invoice.all.select do |invoice|
   #     invoice.transactions.any?{|t| t.result == 'success'}
@@ -19,40 +52,4 @@ class Api::V1::Merchants::RevenueController < Api::ApiController
   #   # binding.pry
   #   respond_with Invoice.joins(:invoice_items, :transactions).where('transactions.result = ?', "success").where(merchant_id: 1).sum(:unit_price)
   # end
-
-  def index
-    # binding.pry
-    b = Merchant.select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
-            .joins(invoices: [:transactions, :invoice_items])
-            .group('merchants.id')
-            .where('transactions.result = ?', "success")
-            .order('total_revenue desc')
-            .take(params[:quantity])
-            # binding.pry
-    respond_with b
-  end
-
-  def show
-    if params[:date]
-      b = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-              .joins(invoices: [:transactions, :invoice_items])
-              .group('merchants.id')
-              .where('transactions.result = ?', "success")
-              .where('invoices.updated_at = ?', "#{params[:date]}")
-              .where('merchants.id = ?', "#{params[:merchant_id]}")
-              .order('revenue desc')
-              .take(params[:quantity])
-    else
-      b = Merchant.select("sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-              .joins(invoices: [:transactions, :invoice_items])
-              .group('merchants.id')
-              .where('transactions.result = ?', "success")
-              .where('merchants.id = ?', "#{params[:merchant_id]}")
-              .order('revenue desc')
-              .take(params[:quantity])
-    end
-    c = {revenue: b.revenue}
-    respond_with c
-  end
-
 end
